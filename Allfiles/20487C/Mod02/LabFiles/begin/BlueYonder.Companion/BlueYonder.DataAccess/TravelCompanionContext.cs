@@ -21,9 +21,10 @@ namespace BlueYonder.DataAccess
         public DbSet<Location> Locations { get; set; }
         public DbSet<Flight> Flights { get; set; }
         public DbSet<FlightSchedule> FlightSchedules { get; set; }
-        public DbSet<Traveler> Travelers { get; set; }    
+        public DbSet<Traveler> Travelers { get; set; }
 
         //TODO : Lab 02, Exercise 1 Task 3.1 : Add Entities to the Context
-
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Trip> Trips { get; set; }
     }
 }
