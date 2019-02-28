@@ -38,7 +38,19 @@ namespace BlueYonder.IntegrationTests
         [TestMethod]
         public void GetReservationWithFlightsEagerLoad()
         {
+            Reservation reservation;
+            using (var repository = new ReservationRepository())
+            {
+                var query = from r in repository.GetAll()
+                            where r.ConfirmationCode == "1234"
+                            select r;
+                query = query.Include(r => r.DepartureFlight).Include(r => r.ReturnFlight);
+                reservation = query.FirstOrDefault();
 
+                Assert.IsNotNull(reservation);
+                Assert.IsNotNull(reservation.DepartureFlight);
+                Assert.IsNotNull(reservation.ReturnFlight);
+            }
         }
 
         [TestMethod]
@@ -56,6 +68,8 @@ namespace BlueYonder.IntegrationTests
 
                 Assert.IsNotNull(reservation);
                 //TODO: Lab 02 Exercise 2, Task 2.2 : Complete the Lazy Load test implementation
+                Assert.IsNotNull(reservation.DepartureFlight);
+                Assert.IsNotNull(reservation.ReturnFlight);
             }
         }
 
@@ -65,6 +79,7 @@ namespace BlueYonder.IntegrationTests
             Reservation reservation;
             TravelCompanionContext context = new TravelCompanionContext();
             //TODO: Lab 02 Exercise 2, Task 2.3 : Turn Lazy Loading Off
+            context.Configuration.LazyLoadingEnabled = false;
 
             using (var repository = new ReservationRepository(context))
             {
@@ -87,7 +102,9 @@ namespace BlueYonder.IntegrationTests
             using (TravelCompanionContext context = new TravelCompanionContext())
             {
                 //TODO: Lab 02 Exercise 2, Task 3.1 : Create an Entity SQL Query
-
+                var sql = @"SELECT value r FROM reservations as r ORDER BY r.confirmationCode DESC";
+                ObjectQuery<Reservation> query = ((IObjectContextAdapter)context).ObjectContext.CreateQuery<Reservation>(sql);
+                reservations = query.ToList();
                 
                 Assert.AreEqual(reservations.Count, 2);
                 Assert.AreEqual(reservations.ElementAt(0).ConfirmationCode, "4321");

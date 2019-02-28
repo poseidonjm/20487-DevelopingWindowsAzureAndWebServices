@@ -156,6 +156,9 @@ namespace BlueYonder.IntegrationTests
             context.Flights.Add(flight4);
 
             //TODO: Lab 02 Exercise 2, Task 6.1 : Add code to save the new reservations          
+            context.Reservations.Add(reservation1);
+            context.Reservations.Add(reservation2);
+            context.SaveChanges();
         }
     }
 }

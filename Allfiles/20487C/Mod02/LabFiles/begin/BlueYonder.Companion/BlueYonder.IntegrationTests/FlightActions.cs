@@ -100,6 +100,17 @@ namespace BlueYonder.IntegrationTests
             flight.FlightNumber = "BY002_updated";
 
             //TODO: Lab 02 Exercise 2, Task 4.1 : Implement the UpdateFlight Method                      
+            FlightRepository repository;
+            using (repository = new FlightRepository())
+            {
+                repository.Edit(flight);
+                repository.Save();
+            }
+            using (repository = new FlightRepository())
+            {
+                Flight updatedFlight = repository.FindBy(f => f.FlightNumber == "BY002_updated").FirstOrDefault();
+                Assert.IsNotNull(updatedFlight);
+            }
         }
      
         [TestMethod]
