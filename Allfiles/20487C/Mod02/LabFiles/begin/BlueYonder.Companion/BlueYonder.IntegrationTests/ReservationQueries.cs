@@ -55,9 +55,10 @@ namespace BlueYonder.IntegrationTests
 
         [TestMethod]
         public void GetReservationWithFlightsLazyLoad()
-        {
+        {   //Context will NOT do lazy loading if the property is not defined as virtual
             Reservation reservation;
-
+            //TravelCompanionContext context = new TravelCompanionContext();
+            //context.Configuration.LazyLoadingEnabled = true;
             using (var repository = new ReservationRepository())
             {
                 var query = from r in repository.GetAll()

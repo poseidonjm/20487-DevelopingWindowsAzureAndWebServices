@@ -104,7 +104,16 @@ namespace BlueYonder.Companion.Client.Helpers
         public async Task<Traveler> GetTravelerAsync()
         {
             // TODO: Lab 03 Exercise 2: Task 1.6: Implement the GetTravelerAsync method
-            return null;
+
+            var hardwareId = GetHardwareId();
+            var uri = new Uri(string.Format(Addresses.GetTravelerByIdentityUri, hardwareId));
+            var response = await GetAsync(uri);
+            Traveler traveler = null;
+            if (response.Success)
+            {
+                traveler = JsonSerializerHelper.Deserialize<TravelerDTO>(response.Content).ToObject();
+            }
+            return traveler;
         }
 
         /// <summary>

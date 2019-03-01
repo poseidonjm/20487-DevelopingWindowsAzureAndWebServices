@@ -17,17 +17,17 @@ namespace BlueYonder.Entities
 
         public string ConfirmationCode { get; set; }
 
-        public int? DepartFlightScheduleID { get; set; }
+        public int DepartFlightScheduleID { get; set; }
 
         //TODO : Lab 02, Exercise 1 Task 2.2 : Add Foreign Key attributes
         [ForeignKey("DepartFlightScheduleID")]
         public virtual Trip DepartureFlight { get; set; }
 
         //TODO : Lab 02, Exercise 1 Task 2.2 : mark property as nullable
-        public int ReturnFlightScheduleID { get; set; }
+        public int? ReturnFlightScheduleID { get; set; }
 
         //TODO : Lab 02, Exercise 1 Task 2.2 : Add Foreign Key attributes
         [ForeignKey("ReturnFlightScheduleID")]
-        public Trip ReturnFlight { get; set; }
+        public virtual Trip ReturnFlight { get; set; }
     }
 }

@@ -13,10 +13,10 @@ namespace BlueYonder.Companion.Host
     {
         public static void Register(HttpConfiguration config)
         {
-             // TODO: Module 4: Exercise 1: Task 3.1: Register the BlueYonder Resolver
-			
+            // TODO: Module 4: Exercise 1: Task 3.1: Register the BlueYonder Resolver
+            config.DependencyResolver = new BlueYonderResolver();
 
-			config.Formatters.Add(new AtomFormatter()); 
+            config.Formatters.Add(new AtomFormatter()); 
             config.MessageHandlers.Add(new AtomHandler());
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(

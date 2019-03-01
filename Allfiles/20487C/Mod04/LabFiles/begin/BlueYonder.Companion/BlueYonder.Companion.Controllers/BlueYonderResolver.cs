@@ -23,7 +23,8 @@ namespace BlueYonder.Companion.Controllers
                 return new TripsController(new ReservationRepository());
 
             // TODO: Lab 4: Exercise 1: Task 2.1: Add a resolver for the LocationsController class                       
-
+            if (serviceType == typeof(LocationsController))
+                return new LocationsController(new LocationRepository());
 
             return null;
         }

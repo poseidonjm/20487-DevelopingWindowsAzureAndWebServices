@@ -18,9 +18,9 @@ namespace BlueYonder.Companion.Controllers
         public ILocationRepository Locations { get; set; }
 
         // TODO: Module 4: Exercise 1: Task 1.2: change the FlightsController Constructor
-        public LocationsController()
+        public LocationsController(ILocationRepository locations)
         {
-            Locations = new LocationRepository();
+            Locations = locations;
         }
 
         public IEnumerable<LocationDTO> Get()

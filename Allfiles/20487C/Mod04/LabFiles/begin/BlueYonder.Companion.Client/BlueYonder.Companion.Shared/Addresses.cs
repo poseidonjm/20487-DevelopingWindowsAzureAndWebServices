@@ -11,7 +11,7 @@ namespace BlueYonder.Companion.Shared
         public static string BaseUri
         {
             // TODO: Module 4: Exercise 3: Task 2.7: Enter BaseUri
-            get { return "[BaseUri]"; }
+            get { return "http://localhost:9239/"; }
         }
 
         public static string GetLocationsUri
