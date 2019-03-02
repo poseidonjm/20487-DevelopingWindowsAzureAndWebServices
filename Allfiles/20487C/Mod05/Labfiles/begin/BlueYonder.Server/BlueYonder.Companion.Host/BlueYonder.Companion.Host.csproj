@@ -166,6 +166,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BlueYonder.BookingService.Contracts\BlueYonder.BookingService.Contracts.csproj">
+      <Project>{075790d2-60a8-4e8e-ac0c-5577bae2ac28}</Project>
+      <Name>BlueYonder.BookingService.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BlueYonder.Companion.Controllers\BlueYonder.Companion.Controllers.csproj">
       <Project>{062691e0-9c27-4119-bae1-13844c50a96b}</Project>
       <Name>BlueYonder.Companion.Controllers</Name>

@@ -11,10 +11,6 @@
     <AssemblyName>BlueYonder.Companion.Controllers</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    
-    
-    
-    
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
@@ -96,6 +92,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BlueYonder.BookingService.Contracts\BlueYonder.BookingService.Contracts.csproj">
+      <Project>{075790d2-60a8-4e8e-ac0c-5577bae2ac28}</Project>
+      <Name>BlueYonder.BookingService.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BlueYonder.Companion.Entities.Mappers\BlueYonder.Companion.Entities.Mappers.csproj">
       <Project>{f583e8b5-47fe-4495-931d-f73f78c1207d}</Project>
       <Name>BlueYonder.Companion.Entities.Mappers</Name>

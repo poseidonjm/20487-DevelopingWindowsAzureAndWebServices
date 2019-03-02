@@ -12,13 +12,16 @@ using BlueYonder.Companion.Entities.Mappers;
 using BlueYonder.DataAccess.Interfaces;
 using BlueYonder.Entities;
 using System.ServiceModel;
+using BlueYonder.BookingService.Contracts;
+using BlueYonder.BookingService.Contracts.Faults;
 
 namespace BlueYonder.Companion.Controllers
 {
     public class ReservationsController : ApiController
     {
         // TODO: Module 5: Exercise 3: Task 3.1: Create an instance of the channel factory 
-        
+        private ChannelFactory<IBookingService> factory =
+          new ChannelFactory<IBookingService>("BookingTcp");
 
         public IReservationRepository Reservations { get; set; }
 
@@ -55,6 +58,8 @@ namespace BlueYonder.Companion.Controllers
 
 
             // TODO: Module 5: Exercise 3: Task 3.6: Call the booking service to create the reservation and get the confirmation code.
+            string confirmationCode = CreateReservationOnBackendSystem(newReservation);
+            newReservation.ConfirmationCode = confirmationCode;
 
             Reservations.Add(newReservation);
             Reservations.Save();
@@ -85,7 +90,7 @@ namespace BlueYonder.Companion.Controllers
         private string CreateReservationOnBackendSystem(Reservation reservation)
         {
             // TODO: Module 5: Exercise 3: Task 3.2: Uncomment the Dto creation objects.   
-            /*TripDto departureFlight = new TripDto
+            TripDto departureFlight = new TripDto
             {
                 FlightScheduleID = reservation.DepartureFlight.FlightScheduleID,
                 Class = reservation.DepartureFlight.Class,
@@ -110,27 +115,31 @@ namespace BlueYonder.Companion.Controllers
                 ReservationDate = reservation.ReservationDate,
                 TravelerId = reservation.TravelerId
             };
-             */
+
 
             // TODO: Module 5: Exercise 3: Task 3.2: Create a channel Factory 
+            IBookingService proxy = factory.CreateChannel();
             try
             {
                 // TODO: Module 5: Exercise 3: Task 3.3: Call the service and return the result
-
+                string confirmationCode = proxy.CreateReservation(request);
+                (proxy as ICommunicationObject).Close();
+                return confirmationCode;
             }
 
             // TODO: Module 5: Exercise 3: Task 3.4: Call the service and return the result
-            catch (HttpException fault)
+            catch (FaultException<ReservationCreationFault> fault)
             {
-                    
+                HttpResponseMessage faultedResponse = Request.CreateResponse(HttpStatusCode.BadRequest, fault.Detail.Description);
+                throw new HttpResponseException(faultedResponse);
             }
             catch (Exception)
             {
                 // TODO: Module 5: Exercise 3: Task 3.5: abort the communication in case of Exception
-               
+                (proxy as ICommunicationObject).Abort();
                 throw;
             }
-            return null;
+            
         }
 
     }

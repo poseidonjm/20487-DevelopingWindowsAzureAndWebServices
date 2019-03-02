@@ -44,7 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Faults\ReservationCreationFault.cs" />
+    <Compile Include="IBookingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReservationDto.cs" />
     <Compile Include="TripDto.cs" />
   </ItemGroup>
   <ItemGroup>

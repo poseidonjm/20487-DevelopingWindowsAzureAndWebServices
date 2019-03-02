@@ -1,5 +1,4 @@
-﻿using BlueYonder.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -9,13 +8,15 @@ using System.Threading.Tasks;
 namespace BlueYonder.BookingService.Contracts
 {
     [DataContract]
-    public class TripDto
+    public class ReservationDto
     {
         [DataMember]
-        public int FlightScheduleID { get; set; }
+        public int TravelerId { get; set; }
         [DataMember]
-        public FlightStatus Status { get; set; }
+        public DateTime ReservationDate { get; set; }
         [DataMember]
-        public SeatClass Class { get; set; }
+        public TripDto DepartureFlight { get; set; }
+        [DataMember]
+        public TripDto ReturnFlight { get; set; }
     }
 }
