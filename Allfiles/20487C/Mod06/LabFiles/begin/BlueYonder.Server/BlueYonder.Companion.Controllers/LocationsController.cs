@@ -24,7 +24,7 @@ namespace BlueYonder.Companion.Controllers
             var locations = Locations.GetAll().ToList();
 
             var locationsDTOs = from l in locations select l.ToLocationDTO();
-
+            //var locationsDTOs = new List<LocationDTO>();
             return locationsDTOs.ToList();
         }
 

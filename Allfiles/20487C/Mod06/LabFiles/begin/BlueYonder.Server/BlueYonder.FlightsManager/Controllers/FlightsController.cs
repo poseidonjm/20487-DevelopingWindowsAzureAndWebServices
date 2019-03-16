@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Http;
@@ -15,17 +17,44 @@ namespace BlueYonder.FlightsManager.Controllers
     {
         string _companionService = WebConfigurationManager.AppSettings["webapi:BlueYonderCompanionService"];
 
-        public ActionResult Index()
+        private static HttpClient proxy = new HttpClient();
+        //proxy.Timeout = TimeSpan.FromSeconds(360);
+
+        public async Task<ActionResult> Index()
         {
             IEnumerable<LocationDTO> locations = null;
 
-            using (var proxy = new HttpClient() { BaseAddress = new Uri(_companionService) })
-            {
-                locations = proxy.GetAsync("Locations?$orderby=Country,City").Result.Content.
-                    ReadAsAsync<IEnumerable<LocationDTO>>().Result;
-            }
+            //specify to use TLS 1.2 as default connection
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
-            return View(locations);            
+
+            //using (var proxy = new HttpClient())
+            //{
+            //BaseAddress = new Uri(_companionService),
+            //  Timeout = TimeSpan.FromSeconds(360)
+            //   })
+            //{
+
+            //locations = proxy.GetAsync("Locations?orderby=Country,City").Result.Content.
+            //   ReadAsAsync<IEnumerable<LocationDTO>>().Result;
+            HttpResponseMessage response = null;
+                try {
+                response = await proxy.GetAsync("https://blueyonder-companion-jm2.azurewebsites.net/Locations");
+                //response = await proxy.GetAsync("http://localhost:49698/Locations");
+            } catch (Exception e) {
+                    return Content("An exception occurred: " + e.Message);
+                    //response = await proxy.GetAsync("https://blueyonder-companion-jm.azurewebsites.net/Locations");
+                }
+                
+                if (response.IsSuccessStatusCode)
+                {
+                    locations = await response.Content.ReadAsAsync<IEnumerable<LocationDTO>>();
+                    return View(locations);
+                }
+                return Content("An error occurred: " + response.Content);
+            //}
+            
+                        
         }
 
         public ActionResult Schedules(int from, int to)

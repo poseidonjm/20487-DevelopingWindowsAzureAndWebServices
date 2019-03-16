@@ -15,7 +15,7 @@
     <AssemblyName>BlueYonder.Companion.Host</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -209,7 +209,11 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\BlueYonder-Companion-jm - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\BlueYonder-Companion-jm - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\BlueYonder-Companion-jm - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\BlueYonder-Companion-jm - Web Deploy2.pubxml" />
+    <None Include="Properties\PublishProfiles\BlueYonder-Companion-jm2 - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -230,7 +234,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49698</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/BlueYonder.Companion.Host</IISUrl>
+          <IISUrl>http://localhost:49698/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
